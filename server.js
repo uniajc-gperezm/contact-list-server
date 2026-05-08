@@ -1,10 +1,13 @@
+// Simple Express server for managing contacts
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
 
+// Create Express app
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = 3000;
 
+// Enable CORS for all routes
 app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname)));
@@ -19,10 +22,13 @@ let contacts = [
 
 let nextId = 6;
 
+// API endpoints
+// GET /api/contacts - Get all contacts
 app.get('/api/contacts', (req, res) => {
     res.json(contacts);
 });
 
+// POST /api/contacts - Create a new contact
 app.post('/api/contacts', (req, res) => {
     const { name, lastname, sex, phone, city, address } = req.body;
     
@@ -44,6 +50,7 @@ app.post('/api/contacts', (req, res) => {
     res.status(201).json(contact);
 });
 
+// PUT /api/contacts/:id - Update a contact
 app.put('/api/contacts/:id', (req, res) => {
     const id = parseInt(req.params.id);
     const { name, lastname, sex, phone, city, address } = req.body;
@@ -71,6 +78,7 @@ app.put('/api/contacts/:id', (req, res) => {
     res.json(contacts[index]);
 });
 
+// DELETE /api/contacts/:id - Delete a contact
 app.delete('/api/contacts/:id', (req, res) => {
     const id = parseInt(req.params.id);
 
